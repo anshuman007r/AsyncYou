@@ -4,27 +4,23 @@ const http =require('http');
 
 async.series({
     requestOne: function(done){
-      let bodyOne='';
-      http.get(process.argv[2].toString(),function(response){
-          response.on('data',function(chunk){
-              bodyOne+=chunk.toString();
-          });
-          response.on('end',function(chunk){
-              done(null,bodyOne);
-          })
-      })
+        FetchURL(process.argv[2],done);
     },
     requestTwo: function(done){
-        let bodyTwo='';
-        http.get(process.argv[3].toString(),function(response){
-            response.on('data',function(chunk){
-                bodyTwo+=chunk.toString();
-            });
-            response.on('end',function(chunk){
-                done(null,bodyTwo);
-            })
-        })
+        FetchURL(process.argv[3],done);
     }
   }, function(error,results){
     console.log(results);
   });
+  
+function FetchURL(url,done){
+    let body='';
+    http.get(url.toString(),function(response){
+        response.on('data',function(chunk){
+            body+=chunk.toString();
+        });
+        response.on('end',function(chunk){
+            done(null,body);
+        })
+    })
+}
