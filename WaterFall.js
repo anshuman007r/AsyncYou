@@ -2,6 +2,7 @@ const process = require('process');
 const file = require('fs');
 const http = require('http');
 const async = require('async');
+
 async.waterfall([
     function(execute){
         file.readFile(process.argv[2],function(error,data){
@@ -22,7 +23,6 @@ async.waterfall([
             done(error);
         });
     }
-
 ],function(error,data){
     if (error) return console.error(error);
     console.log(data) 
